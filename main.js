@@ -1,7 +1,11 @@
-// if (window.confirm("Do you want me to try"))
-// https://www.theatlantic.com/technology/archive/2022/12/chatgpt-ai-writing-college-student-essays/672371/
-
 javascript: (function () {
+  let areYouSure =
+    "!!JANK!!: try injecting a full-size iframe? this is almost guaranteed to break things -- do CTRL+SHIFT+R when you're done.";
+  let peskyTagCount = 0;
+
+  let peskySemanticTags = document.querySelectorAll(
+    "aside, footer, header, #left-sidebar"
+  );
   function injectIframe() {
     let iframe = document.createElement("iframe");
 
@@ -23,12 +27,6 @@ javascript: (function () {
   }
 
   function wipePeskyTags() {
-    let peskyTagCount = 0;
-
-    let peskySemanticTags = document.querySelectorAll(
-      "aside, footer, header, #left-sidebar"
-    );
-
     console.log(peskySemanticTags);
 
     peskySemanticTags.forEach((element) => {
@@ -36,18 +34,20 @@ javascript: (function () {
       element.remove();
     });
 
+    if (peskyTagCount === 0) {
+      return;
+    }
+
     alert(
       `wiped out ${peskyTagCount} pesky elements & left the <article> behind`
     );
   }
 
-  if (
-    window.confirm(
-      "try injecting a full-size iframe? this may or may not work."
-    )
-  ) {
-    injectIframe();
-  }
-
   wipePeskyTags();
+
+  if (peskyTagCount === 0) {
+    if (window.confirm(areYouSure)) {
+      injectIframe();
+    }
+  }
 })();
